@@ -1,5 +1,5 @@
 # **Traffic Sign Recognition**
-### Project Submission for Patrick Poon (patrickmpoon@gmail.com)
+### Project Submission for Patrick Poon
 
 
 
