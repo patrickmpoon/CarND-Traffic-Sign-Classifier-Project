@@ -102,7 +102,7 @@ Augmenting the data would likely have yielded higher accuracy figures, but due t
 
 The code for my final model is located in the cell 11 of the IPython notebook. 
 
-I used the LeNet architecture from Lesson 8, Convolutional Neural Networks, as a starting point.  I experimented with various modifications, such as implementing dropout and adding a third convolutional layer, but neither seemed to improve accuracy with the parameter values I used.  So, I dropped them and focused on modifying different hyperparameters for the LeNet architecture.
+I used the LeNet architecture from Lesson 8, Convolutional Neural Networks, as a starting point.
 
 My final model consisted of the following layers:
 
@@ -148,35 +148,60 @@ If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
 
   The LeNet architecture was chosen per the instructions in Lesson 9: Deep Learning - 
-  Traffic Sign Classifier.
+  Traffic Sign Classifier.  It was a suggested as a good starting point.
 
 * What were some problems with the initial architecture?
 
+  The initial settings were woefully inadequate, as the LeNet code from Lesson 8
+  were designed to classify number images in only 10 classes.  My initial accuracy
+  numbers were less than 6%.  I realized that I needed to increase the number of
+  classes to 43.  This increased the accuracy to around 86%, which was a huge
+  improvement, but still well below the minimum threshold to pass this activity of 
+  93%.
 
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to over fitting or under fitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
 
+  I experimented with various modifications, such as implementing dropout and adding 
+  a third convolutional layer, but neither seemed to improve accuracy with the 
+  parameter values I used.  So, I dropped them and focused on modifying different 
+  hyperparameters for the LeNet architecture instead.
+
 * Which parameters were tuned? How were they adjusted and why?
 
-I read in different forums that using a smaller batch size would result in lower accuracy, but I found that a size of 16 provided better performance in my testing.
+  I read in different forums that using a smaller batch size would result in lower 
+  accuracy, but I found that a size of 16 provided better performance in my testing.
 
-Another hyperparameter that seems to have yielded performance benefits was the number of filters used in the convolutional layers.  Increasing them to 64 in the first layer, then 128 in the second layer seemed to have resulted in higher prediction accuracy.
-
-
-  
+  Another hyperparameter that seems to have yielded performance benefits was the 
+  number of filters used in the convolutional layers.  Increasing them to 64 in the 
+  first layer, then 128 in the second layer resulted in higher prediction accuracy.
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
-If a well known architecture was chosen:
-
-* What architecture was chosen?
-
-  LeNet
-
-* Why did you believe it would be relevant to the traffic sign application?
-
-
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+	If a well known architecture was chosen:
+	
+	* What architecture was chosen?
+	
+	  I stuck with the initial LeNet architecture suggested in the instructions.  The two
+	  convolutional layers remove data that enables the model learn to make some
+	  generalizations of different image patterns to adequately fit never before seen
+	  images into various classes.
+	  
+	  A dropout layer might help as discarding a certain percentage of data will require
+	  the model to generalize even further.
+	
+	* Why did you believe it would be relevant to the traffic sign application?
+	
+	  It had proven effective in classifying digits, and has been used effectively
+	  by researchers in classifying different types of images.
+	
+	* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+	
+	  By using separate images for training, validation, and testing, we can reasonably
+	  assume that when the model is fed an image that it has never seen before, that it 
+	  has learned a sufficient number of patterns to make an educated guess of what how 
+	  the image should be classified during validation and testing, provided that the
+	  prediction accuracies were in the 90th percentile.
+  
 
 ### Test a Model on New Images
 
@@ -188,53 +213,66 @@ Here are five German traffic signs that I found on the web:
 
 I cropped and scaled them to 32 x 32 pixels to put them into a format that my model could process.
 Here are a few thoughts on traits that could make them difficult to classify:
-- The first sign (Speed limit 30 km/h) might be difficult to classify because of the noise in the
-background, such as the foliage and the road.  The sign is also slightly angled.
-- The second sign (Bicycles crossing) might be difficult to classify because of the other traffic
-sign beneath it.
+
+- The first sign (Speed limit 30 km/h) might be difficult to classify because of the noise in the background, such as the foliage and the road.  The sign is also slightly angled.
+- The second sign (Bicycles crossing) might be difficult to classify because of the other traffic sign beneath it.
 - The third (Children crossing) and fifth (Slippery road) signs may be difficult to classify as they are rotated and skewed.
-- The fourth sign (No passing) should not be difficult to classify.  The sign is well-framed with a
-direct frontal view.
+- The fourth sign (No passing) should not be difficult to classify.  The sign is well-framed with a direct head-on view.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
-The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
+The code for making predictions on my final model is located in cells 16 and 17 of the IPython notebook.
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Image			      | Prediction.          | 
+|:--------------------:|:--------------------:| 
+| Speed limit (30km/h) | Speed limit (30km/h) | 
+| Bicycles crossing    | Bicycles crossing    |
+| Children crossing    | Children crossing    |
+| No passing           | No passing           |
+| Slippery road        | Slippery road        |
 
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 94%.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 18th cell of the Ipython notebook.
 
 
-For the first image, the model is absolutely sure that this is a "Speed limit (30km/h)" with 100%
-confidence.
+For the first image, the model is absolutely sure that this is a "Speed limit (30km/h)" sign with 100% confidence.
 <img src="./images/top5_softmax_predictions_sign1.png" width="100%" alt="Top 5 Softmax Predictions for Speed limit (30km/h)" />
 
-With the second image, the model is slightly less sure that this is a "Bicycles crossing" with
-99.9990% confidence.
+----
+
+With the second image, the model is slightly less sure that this is a "Bicycles crossing" sign with 99.9990% confidence.  The next likely sign was a "Bumpy road" sign, but the chances of that are negligible at 0.0010%.
 <img src="./images/top5_softmax_predictions_sign2.png" width="100%" alt="Top 5 Softmax Predictions for Bicycles crossing" />
 
-Next, for the third image, the model is relatively slightly less sure that this is a "Bicycles crossing"
-with 99.9957% confidence.  In previous model iterations, this sign was difficult to classify, and
-was frequently classified incorrectly.
+----
+
+Next, for the third image, the model is relatively slightly less sure that this is a "Bicycles crossing" sign with 99.9957% confidence.  The next likely candidate would have been "Dangerous curve to the right" sign with a 0.0022% chance.
+
 <img src="./images/top5_softmax_predictions_sign3.png" width="100%" alt="Top 5 Softmax Predictions for Children crossing" />
 
-With the fourth image, the model was once again absolutely positive that this is a "No passing"
-sign.
+In previous model iterations, this sign was difficult to classify, and was frequently classified incorrectly.
+
+----
+
+With the fourth image, the model was once again absolutely positive that this is a "No passing" sign.
 <img src="./images/top5_softmax_predictions_sign4.png" width="100%" alt="Top 5 Softmax Predictions for No passing" />
+
+----
 
 Finally, for the fifth and final traffic sign, it was also completely sure that this is a "Slippery
 road" sign.
 <img src="./images/top5_softmax_predictions_sign5.png" width="100%" alt="Top 5 Softmax Predictions for Slippery road" />
+
+----
+
+
+
+#### Visualization of the Neural Network's State for Sign 1
+
+Here is a visualization of the 64 feature maps that were used in predicting Sign 1, Speed limit (30 km/h):
+
+<img src="./images/nn-visual-30kmh.png" width="100%" alt="Neural Network State Visualization of Sign 1" />
